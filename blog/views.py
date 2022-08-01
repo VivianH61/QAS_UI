@@ -8,6 +8,7 @@ from django.views.generic import (
     DeleteView
 )
 from .models import Post
+from .forms import SssSettingForm
 
 
 def home(request):
@@ -65,3 +66,22 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 def about(request):
     return render(request, 'blog/about.html', {'title': 'About'})
+
+
+# set the parameters of SSS
+n = 10
+k = 3
+def setting(request):
+	if request.method == 'POST':
+		form = SssSettingForm(request.POST)
+		if form.is_valid():
+			#form.save()
+			global n
+			global k
+			n = form.cleaned_data.get('Set_the_number_of_participants')
+			k = form.cleaned_data.get('Least_number_of_participants_for_key_reconstruction')
+            #messages.success(request, f'Account created for {username}!')
+			#return redirect('set_parties')
+	else:
+		form = SssSettingForm()
+	return render(request, 'blog/setting.html', {'form': form})
