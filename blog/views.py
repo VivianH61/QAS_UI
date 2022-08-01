@@ -9,6 +9,7 @@ from django.views.generic import (
 )
 from .models import Post
 from .forms import SssSettingForm
+from django.contrib import messages
 
 
 def home(request):
@@ -72,16 +73,23 @@ def about(request):
 n = 10
 k = 3
 def setting(request):
-	if request.method == 'POST':
-		form = SssSettingForm(request.POST)
-		if form.is_valid():
-			#form.save()
-			global n
-			global k
-			n = form.cleaned_data.get('Set_the_number_of_participants')
-			k = form.cleaned_data.get('Least_number_of_participants_for_key_reconstruction')
-            #messages.success(request, f'Account created for {username}!')
-			#return redirect('set_parties')
-	else:
-		form = SssSettingForm()
-	return render(request, 'blog/setting.html', {'form': form})
+    if request.method == 'POST':
+        form = SssSettingForm(request.POST)
+        if form.is_valid():
+            # form.save()
+            global n
+            global k
+            n = form.cleaned_data.get('Set_the_number_of_participants')
+            k = form.cleaned_data.get('Least_number_of_participants_for_key_reconstruction')
+    else:
+        form = SssSettingForm()
+    return render(request, 'blog/setting.html', {'form': form})
+
+def sent_emails(request):
+    if request.method == "GET":
+        print("yyeyeyyeyys")
+        
+    context = {
+        'posts': Post.objects.all()
+    }
+    return render(request, 'blog/sent_emails.html', context)

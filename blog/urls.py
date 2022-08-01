@@ -7,6 +7,8 @@ from .views import (
     PostDeleteView
 )
 from . import views
+from .views import *
+from django.urls import reverse
 
 urlpatterns = [
     path('', PostListView.as_view(), name='blog-home'),
@@ -16,4 +18,7 @@ urlpatterns = [
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
     path('about/', views.about, name='blog-about'),
     path('setting/', views.setting, name='blog-setting'),
+    path('sent_emails/', views.sent_emails, name='sent-emails'),
 ]
+
+
