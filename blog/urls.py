@@ -19,6 +19,7 @@ urlpatterns = [
     path('about/', views.about, name='blog-about'),
     path('setting/', views.setting, name='blog-setting'),
     path('sent_emails/', views.sent_emails, name='sent-emails'),
+    path('enter_share/', views.enter_share, name='enter-share'),
 ]
 
 

@@ -1,3 +1,4 @@
+from functools import partial
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -13,3 +14,21 @@ class SssSettingForm(forms.Form):
     class Meta:
         model = User
         fields = ['n', 'k']
+
+
+# this form allows the user to input the partial shares
+class EnterShareForm(forms.Form):
+    party_id = forms.IntegerField()
+    partial_key = forms.CharField()
+    class Meta:
+        model = User
+        fields = ['id','share']
+
+
+class TransactionsForm(forms.Form):
+    amount = forms.IntegerField()
+    private_key = forms.CharField()
+    address = forms.CharField()
+    class Meta:
+        model = User
+        fields = ['anount', 'private_key', 'address']  

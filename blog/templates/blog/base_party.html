@@ -12,11 +12,8 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
 
-    {% if title %}
-        <title>Key Management - {{ title }}</title>
-    {% else %}
-        <title>Key Management</title>
-    {% endif %}
+    <title>Key Reconstruction</title>
+    
 </head>
 <body>
     <header class="site-header">
@@ -26,26 +23,10 @@
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarToggle">
-            <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{% url 'blog-home' %}">Parties Info</a>
-              <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
-              <a class="nav-item nav-link" href="{% url 'blog-setting' %}">Setting</a>
-            </div>
-            <!-- Navbar Right Side -->
-            <div class="navbar-nav">
-              {% if user.is_authenticated %}
-                <a class="nav-item nav-link" href="{% url 'post-create' %}">New Party</a>
-                <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-              {% else %}
-                <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-                <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
-              {% endif %}
-            </div>
-          </div>
         </div>
       </nav>
     </header>
+    
     <main role="main" class="container">
       <div class="row">
         <div class="col-md-8">
@@ -58,9 +39,10 @@
           {% endif %}
           {% block content %}{% endblock %}
         </div>
+        <!--
         <div class="col-md-4">
           <div class="content-section">
-            <h3>Make Transactions</h3>
+            <h3>Sidebar</h3>
             <p class='text-muted'>...
               <ul class="list-group">
                 <li class="list-group-item list-group-item-light">Make Transaction</li>
@@ -69,9 +51,10 @@
             </p>
           </div>
         </div>
+        -->
       </div>
     </main>
-
+  
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

@@ -8,8 +8,10 @@ from django.views.generic import (
     DeleteView
 )
 from .models import Post
-from .forms import SssSettingForm
+from .forms import SssSettingForm, EnterShareForm
 from django.contrib import messages
+
+import secret_sharing as sss
 
 
 def home(request):
@@ -72,6 +74,8 @@ def about(request):
 # set the parameters of SSS
 n = 10
 k = 3
+shares = []
+ids = []
 def setting(request):
     if request.method == 'POST':
         form = SssSettingForm(request.POST)
@@ -87,9 +91,51 @@ def setting(request):
 
 def sent_emails(request):
     if request.method == "GET":
-        print("yyeyeyyeyys")
-        
+        '''
+        To-do: 
+        1. split the private key
+        2. save to n files and send to n parties by email
+        3. set the shares to be []
+        '''
+        sss.split_private_key("./keys/privateKey.txt", k, n)
+        shares = []
+        ids = []
+
     context = {
         'posts': Post.objects.all()
     }
     return render(request, 'blog/sent_emails.html', context)
+
+
+def enter_share(request):
+    # use form and save shares into a global variable (like list..)
+    # everytime a new share is added, check the total number of shares
+    if request.method == 'POST':
+        form = EnterShareForm(request.POST)
+        if form.is_valid():
+            # form.save()
+            party_id = form.cleaned_data.get('party_id')
+            partial_key = form.cleaned_data.get('partial_key')
+            global shares
+            global ids
+            shares.append(partial_key)
+            ids.append(party_id)
+            print(shares)
+            if len(shares) >= k:
+                '''
+                to-do
+                save shares into a file, call reconstruct func
+                save the reconstructed private key into a file
+                approve the transaction
+                '''
+                file1 = open('./keys/received_shares.txt', 'w')
+                for i in range(k):
+                    file1.write(str(ids[i]) + '|' + shares[i] + '\n')
+                # Closing file
+                file1.close()
+                # reconstruct the private key
+                reconstructed_private_key = sss.reconstruct_private_key('./keys/received_shares.txt', k)
+                print(reconstructed_private_key)
+    else:
+        form = EnterShareForm()
+    return render(request, 'blog/enter_secret_shares.html', {'form': form})
