@@ -1,18 +1,19 @@
 {% extends "blog/base.html" %}
 {% block content %}
     {% for post in posts %}
-        <article class="media content-section">
-          <!---
-          <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}"> --->
-          <div class="media-body">
-            <div class="article-metadata">
-              <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
-            </div>
-            <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.name }}</a></h2>
-            <p class="article-content">{{ post.email }}</p>
-          </div>
-        </article>
+<article class="media content-section">
+    <!--
+    <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+    -->
+    <div class="media-body">
+        <div class="article-metadata">
+            <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+        </div>
+        <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.name }}</a></h2>
+        <p class="article-content">{{ post.email }}</p>
+    </div>
+</article>
     {% endfor %}
     
-    <h1>secret shares of the private key have been sent to the parties above!</h1>
+    <p style="color: white;">Secret shares of the private key have been sent to the parties above!</p>
 {% endblock content %}

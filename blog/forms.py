@@ -27,8 +27,8 @@ class EnterShareForm(forms.Form):
 
 class TransactionsForm(forms.Form):
     amount = forms.IntegerField()
-    private_key = forms.CharField()
+    #private_key = forms.CharField()
     address = forms.CharField()
     class Meta:
         model = User
-        fields = ['anount', 'private_key', 'address']  
+        fields = ['anount', 'address']  

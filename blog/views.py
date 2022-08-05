@@ -8,7 +8,7 @@ from django.views.generic import (
     DeleteView
 )
 from .models import Post
-from .forms import SssSettingForm, EnterShareForm
+from .forms import SssSettingForm, EnterShareForm, TransactionsForm
 from django.contrib import messages
 
 import secret_sharing as sss
@@ -139,3 +139,14 @@ def enter_share(request):
     else:
         form = EnterShareForm()
     return render(request, 'blog/enter_secret_shares.html', {'form': form})
+
+
+def transaction(request):
+    if request.method == 'POST':
+        form = TransactionsForm(request.POST)
+        if form.is_valid():
+            # make transaction
+            print("make transaction")
+    else:
+        form = TransactionsForm()
+    return render(request, 'blog/transaction.html', {'form': form})
