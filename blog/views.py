@@ -14,6 +14,11 @@ from django.contrib import messages
 import secret_sharing as sss
 
 
+from django.conf import settings
+from django.core.mail import send_mail
+
+
+
 def home(request):
     context = {
         'posts': Post.objects.all()
