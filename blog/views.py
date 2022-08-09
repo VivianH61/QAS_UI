@@ -98,6 +98,7 @@ def sent_emails(request):
         3. set the shares to be []
         '''
         sss.split_private_key("./keys/privateKey.txt", k, n)
+        global shares, ids
         shares = []
         ids = []
 
@@ -121,6 +122,7 @@ def enter_share(request):
             shares.append(partial_key)
             ids.append(party_id)
             print(shares)
+            print(ids)
             if len(shares) >= k:
                 '''
                 to-do
@@ -135,7 +137,10 @@ def enter_share(request):
                 file1.close()
                 # reconstruct the private key
                 reconstructed_private_key = sss.reconstruct_private_key('./keys/received_shares.txt', k)
-                print(reconstructed_private_key)
+                print("reconstructed: " + reconstructed_private_key)
+                file2 = open('./keys/new_private_key.txt', 'w')
+                file2.write(reconstructed_private_key)
+                file2.close()
     else:
         form = EnterShareForm()
     return render(request, 'blog/enter_secret_shares.html', {'form': form})

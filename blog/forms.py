@@ -31,4 +31,4 @@ class TransactionsForm(forms.Form):
     address = forms.CharField()
     class Meta:
         model = User
-        fields = ['anount', 'address']  
+        fields = ['amount', 'address']  
