@@ -2,15 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\blog",
-    "\\blog\\static",
-    "\\blog\\static\\blog",
     "\\blog\\templates",
+    "\\blog\\templates\\blog",
+    "\\keys",
     "\\secret_sharing",
     "\\secret_sharing\\src",
     "\\users",
     "\\users\\templates",
     "\\users\\templates\\users"
   ],
-  "SelectedNode": "\\django_project\\settings.py",
+  "SelectedNode": "\\README.md",
   "PreviewInSolutionExplorer": false
 }

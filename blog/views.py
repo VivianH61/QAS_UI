@@ -11,7 +11,7 @@ from .models import Post
 from .forms import SssSettingForm, EnterShareForm, TransactionsForm
 from django.contrib import messages
 
-import secret_sharing as sss
+import ShamirSecretSharing as sss
 
 
 from django.conf import settings

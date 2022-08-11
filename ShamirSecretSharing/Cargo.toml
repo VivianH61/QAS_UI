@@ -1,0 +1,21 @@
+[package]
+name = "ShamirSecretSharing"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "ShamirSecretSharing"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "0.16.5", features = ["extension-module"] }
+sss = { path = "sss", features = ["parse"] }
+clap = "2.33.3"
+hex = "0.4.3"
+rand = "0.8.4"
+regex = "1"
+
+[dev-dependencies]
+plotters = "0.3.1"
+plotters-backend = "0.3.2"
