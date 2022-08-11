@@ -1,7 +1,16 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\blog",
+    "\\blog\\static",
+    "\\blog\\static\\blog",
+    "\\blog\\templates",
+    "\\secret_sharing",
+    "\\secret_sharing\\src",
+    "\\users",
+    "\\users\\templates",
+    "\\users\\templates\\users"
   ],
-  "SelectedNode": "\\db.sqlite3",
+  "SelectedNode": "\\django_project\\settings.py",
   "PreviewInSolutionExplorer": false
 }

@@ -15,7 +15,9 @@ import secret_sharing as sss
 
 
 from django.conf import settings
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMultiAlternatives
+
+import smtplib, ssl
 
 
 
@@ -77,10 +79,11 @@ def about(request):
 
 
 # set the parameters of SSS
-n = 10
+# default value of n and k: 6 and 3
+n = 6
 k = 3
-shares = []
 ids = []
+shares = []
 def setting(request):
     if request.method == 'POST':
         form = SssSettingForm(request.POST)
@@ -96,16 +99,27 @@ def setting(request):
 
 def sent_emails(request):
     if request.method == "GET":
-        '''
-        To-do: 
-        1. split the private key
-        2. save to n files and send to n parties by email
-        3. set the shares to be []
-        '''
+        # generate the secret shares for each party in the "./keys" folder
         sss.split_private_key("./keys/privateKey.txt", k, n)
+        # send the shares to n parties by email
+        posts = Post.objects.all()
+        i = 0
+        for post in posts:
+            email_from = settings.EMAIL_HOST_USER
+            subject = '[QASTokenApp] Your partial key'
+            to = [post.email]
+            #text_content = 'Hi,\n\nThe admin account is making a transaction, if you decide to authorize this transaction, please enter your partial private key in the link below.\n\nhttp://127.0.0.1:8000/enter_share/\n Thank you!'
+            text_content = "Hi, this is the partial private key for the admin account. Please keep in a save place. Thanks!"
+            message = EmailMultiAlternatives(subject, text_content, email_from, to)
+            message.attach_file('keys/partial_key_' + str(i) + '.txt')
+            i += 1
+            message.send()
+
+        
         global shares, ids
-        shares = []
         ids = []
+        shares = []
+        
 
     context = {
         'posts': Post.objects.all()
@@ -114,8 +128,6 @@ def sent_emails(request):
 
 
 def enter_share(request):
-    # use form and save shares into a global variable (like list..)
-    # everytime a new share is added, check the total number of shares
     if request.method == 'POST':
         form = EnterShareForm(request.POST)
         if form.is_valid():
@@ -126,11 +138,11 @@ def enter_share(request):
             global ids
             shares.append(partial_key)
             ids.append(party_id)
-            print(shares)
-            print(ids)
+            '''
+            When enough parties provide their shares, the backend will automatically reconstruct the private key and save into the file "./key/new_private_key.txt"
+            '''
             if len(shares) >= k:
                 '''
-                to-do
                 save shares into a file, call reconstruct func
                 save the reconstructed private key into a file
                 approve the transaction
@@ -146,17 +158,30 @@ def enter_share(request):
                 file2 = open('./keys/new_private_key.txt', 'w')
                 file2.write(reconstructed_private_key)
                 file2.close()
+                ### make transaction
+                '''
+                sendInitialEther(reconstructed_private_key, send_to_address)
+                '''
     else:
         form = EnterShareForm()
     return render(request, 'blog/enter_secret_shares.html', {'form': form})
 
-
+# admin account making a transaction
 def transaction(request):
     if request.method == 'POST':
         form = TransactionsForm(request.POST)
         if form.is_valid():
-            # make transaction
-            print("make transaction")
+            posts = Post.objects.all()
+            i = 0
+            for post in posts:
+                email_from = settings.EMAIL_HOST_USER
+                subject = '[QASTokenApp] Action Required'
+                to = [post.email]
+                text_content = 'Hi,\n\nThe admin account is making a transaction, if you decide to authorize this transaction, please enter your partial private key in the link below.\n\nhttp://127.0.0.1:8000/enter_share/\n Thank you!'
+                message = EmailMultiAlternatives(subject, text_content, email_from, to)
+                i += 1
+                message.send()
+
     else:
         form = TransactionsForm()
     return render(request, 'blog/transaction.html', {'form': form})

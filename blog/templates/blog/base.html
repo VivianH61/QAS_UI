@@ -86,31 +86,6 @@
                 {% endif %}
                 {% block content %}{% endblock %}
             </div>
-            <!--
-            <div class="col-md-4">
-                <div class="content-section">
-                    <h3>Make Transactions</h3>
-
-                    {% csrf_token %}
-                    <fieldset class="form-group">
-                        {{ form|crispy }}
-                    </fieldset>
-
-                    <form method="POST">
-                        {% csrf_token %}
-                        <fieldset class="form-group">
-                            <legend class="border-bottom mb-4">
-                                If you decide to authorize this transaction, please provide your partial private key:
-                            </legend>
-                            {{ form|crispy }}
-                        </fieldset>
-                        <div class="form-group">
-                            <button class="btn btn-outline-info" style="background-color: #ffe600; border: none; color: black;" type="submit">Submit</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            -->
         </div>
     </main>
 
